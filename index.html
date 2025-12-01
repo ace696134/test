@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>My First Webpage</title>
-  </head>
+<html>
+<head>
+<style>
+    body {
+        background: #111;
+        color: #fff;
+        font-family: Arial;
+    }
 
-  <body>
-  </body>
+    .center-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40vh;
+    }
+
+    #inventory {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        background: #333;
+        color: white;
+        border: none;
+        margin: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+
+<body onload="loadGame()">
+
+<div class="center-box">
+    <h1 class="center-text">Exploration Game</h1>
+</div>
+
+<div style="text-align:center;">
+    <button class="btn" onclick="addItem('Key')">Pick Up Key</button>
+    <button class="btn" onclick="addItem('Crystal')">Pick Up Crystal</button>
+    <button class="btn" onclick="addItem('Lantern')">Pick Up Lantern</button>
+</div>
+
+<div id="inventory"></div>
+
+<script>
+let inventory = [];
+
+function addItem(item) {
+    inventory.push(item);
+    saveGame();
+    displayInventory();
+}
+
+function displayInventory() {
+    document.getElementById("inventory").innerHTML =
+        "Inventory: " + (inventory.length ? inventory.join(", ") : "Empty");
+}
+
+function saveGame() {
+    localStorage.setItem("inventory", JSON.stringify(inventory));
+}
+
+function loadGame() {
+    const saved = localStorage.getItem("inventory");
+    if (saved) {
+        inventory = JSON.parse(saved);
+    }
+    displayInventory();
+}
+</script>
+
+</body>
 </html>
